@@ -22,7 +22,7 @@ public:
 
     ExtensionFinder(string pattern, string path);
 
-    ExtensionFinder(string pattern, vector<string> results, string path);
+    ExtensionFinder(string pattern, vector<string> &results, string path);
 
     ExtensionFinder& findAll();
 
