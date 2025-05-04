@@ -1,0 +1,24 @@
+#include "FileReader.hpp"
+
+#include <iostream>
+
+FileReader::FileReader(const string& fileName) : fileName(fileName) {
+    inputFile.open(fileName);
+    if (!inputFile)
+        std::cerr << "Unable to open file: " << fileName << '\n';
+}
+
+FileReader::~FileReader() {
+    if (inputFile.is_open())
+        inputFile.close();
+}
+
+bool FileReader::isOpen() const {
+    return inputFile.is_open();
+}
+
+bool FileReader::readLine(string& line) {
+    if (std::getline(inputFile, line))
+        return true;
+    return false;
+}
