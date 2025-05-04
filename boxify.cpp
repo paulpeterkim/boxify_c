@@ -3,6 +3,7 @@
 
 #include "ExtensionFinder.hpp"
 #include "FileReader.hpp"
+#include "CodeBlock.hpp"
 
 #define NL '\n'
 #define LINE "===========================================================\n"
@@ -17,10 +18,10 @@ int main() {
         FileReader fileReader(path);
         if (!fileReader.isOpen())
             return 1;
-        std::string line;
-        while (fileReader.readLine(line)) {
-            std::cout << line << std::endl;
-        }
+
+        CodeBlock codeBlock(fileReader);
+        codeBlock.print();
+        
         std::cout << LINE;
     }
 
