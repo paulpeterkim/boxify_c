@@ -3,23 +3,24 @@
 
 #include <string>
 #include <vector>
-
-#include "FileReader.hpp"
+#include "utils.hpp"
 
 using std::vector;
 using std::string;
 
 class CodeBlock {
 private:
-    FileReader& fp;
     vector<string> lines;
+    vector<unsigned int> subBlocksPosArr; // Stores indices of the vector "lines" which after such indices, sub code blocks follow.
     vector<CodeBlock> subBlocks;
-    int depth = 0;
+    bool delegateToSubBlocks = false; // A flag when set, transfers input line to its sub code blocks.
+    unsigned int depth = 0; // Depth of current code block
+    unsigned int max_len = 0; 
 public:
-    // Contructor for main code block.
-    CodeBlock(FileReader& fp);
     // Constructor for subblocks.
-    CodeBlock(FileReader& fp, string line);
+    CodeBlock(int depth);
+    // Adds line of string. Returns max length of the current code block.
+    unsigned int addLine(string line);
     void print();
 };
 
