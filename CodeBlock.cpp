@@ -5,7 +5,7 @@
 
 using std::string;
 
-
+CodeBlock::CodeBlock() {}
 CodeBlock::CodeBlock(int prev_depth) : depth(prev_depth + 1) {}
 
 // Needs to pass in trimmed string line.
@@ -14,6 +14,14 @@ unsigned int CodeBlock::addLine(string line) {
     bool isSubBlockEnd = line.front() == '}';
 
     unsigned int len = line.length();
+
+    if (!lines.size()) {
+        lines.push_back(line);
+        if (len > max_len) {
+            max_len = len;
+        }
+        return len;
+    }
 
     if (delegateToSubBlocks) {
         if (isSubBlockStart && isSubBlockEnd) {
@@ -26,8 +34,9 @@ unsigned int CodeBlock::addLine(string line) {
             len = subBlocks.back().addLine(line) + 2;
         } else if (!isSubBlockStart && isSubBlockEnd) {
             // }
+            if (!subBlocks.back().delegateToSubBlocks)
+                delegateToSubBlocks = false;
             len = subBlocks.back().addLine(line) + 2;
-            delegateToSubBlocks = false;
         } else {
             // ~
             len = subBlocks.back().addLine(line) + 2;
@@ -35,7 +44,6 @@ unsigned int CodeBlock::addLine(string line) {
     } else {
         if (isSubBlockStart) {
             // ~ {
-            // It is start of sub-block.
             subBlocksPosArr.push_back(lines.size() - 1);
             subBlocks.push_back(CodeBlock(depth));
             len = subBlocks.back().addLine(line) + 2;
@@ -44,6 +52,7 @@ unsigned int CodeBlock::addLine(string line) {
             lines.push_back(line);
         }
     }
+
     if (len > max_len) {
         max_len = len;
     }
@@ -52,15 +61,18 @@ unsigned int CodeBlock::addLine(string line) {
 }
 
 void CodeBlock::print() {
-    size_t i = 0;
-    for (size_t si = 0; si < subBlocksPosArr.size(); ++si) {
-        for (; i < lines.size(); ++i) {
+    size_t si = 0;
+    for (size_t i = 0; i < lines.size(); ++i) {
+        if (i && lines[i].front() != '}')
             for (int j = 0; j < depth; ++j)
                 std::cout << '\t';
-            std::cout << lines[i] << '\n';
-            if (subBlocksPosArr[si] == i)
-                break;
+        else if (depth > 0 || lines[i].front() == '}') 
+            for (int j = 0; j < depth - 1; ++j)
+                std::cout << '\t';
+        std::cout << lines[i] << '\n';
+        if (si < subBlocksPosArr.size() && subBlocksPosArr[si] == i) {
+            subBlocks[si++].print();
         }
-        subBlocks[si].print();
+            
     }
 }

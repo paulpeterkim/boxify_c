@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include "utils.hpp"
 
 using std::vector;
 using std::string;
@@ -17,6 +16,7 @@ private:
     unsigned int depth = 0; // Depth of current code block
     unsigned int max_len = 0; 
 public:
+    CodeBlock();
     // Constructor for subblocks.
     CodeBlock(int depth);
     // Adds line of string. Returns max length of the current code block.
