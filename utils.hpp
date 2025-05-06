@@ -36,4 +36,24 @@ inline void trim(std::string &s) {
     ltrim(s);
 }
 
+inline std::string center_string(const std::string& text, unsigned int width, char pad = ' ') {
+    int len = text.length();
+    if (len >= width) {
+        return text;
+    }
+
+    int padding_len = width - len;
+    int left_pad = padding_len / 2;
+    int right_pad = padding_len - left_pad;
+
+    std::ostringstream result;
+    result << std::setfill(pad) << std::setw(left_pad) << "";
+    
+    result << text;
+
+    result << std::setfill(pad) << std::setw(right_pad) << "";
+
+    return result.str();
+}
+
 #endif
