@@ -21,6 +21,12 @@ public:
     CodeBlock(int depth);
     // Adds line of string. Returns max length of the current code block.
     unsigned int addLine(string line);
+    vector<string>& getLines();
+    unsigned int getLinesSize();
+    vector<CodeBlock>& getSubBlocks();
+    vector<unsigned int>& getSubBlocksPos();
+    unsigned int getDepth();
+    unsigned int getMaxLen();
     void print();
 };
 

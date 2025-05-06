@@ -15,8 +15,11 @@ unsigned int CodeBlock::addLine(string line) {
 
     unsigned int len = line.length();
 
+    
+
     if (!lines.size()) {
         lines.push_back(line);
+        // std::cout << "Adding to depth " << depth << " line: " << line << std::endl;
         if (len > max_len) {
             max_len = len;
         }
@@ -50,6 +53,7 @@ unsigned int CodeBlock::addLine(string line) {
             delegateToSubBlocks = true;
         } else {
             lines.push_back(line);
+            // std::cout << "Adding to depth " << depth << " line: " << line << std::endl;
         }
     }
 
@@ -58,6 +62,30 @@ unsigned int CodeBlock::addLine(string line) {
     }
 
     return len;
+}
+
+vector<string>& CodeBlock::getLines() {
+    return lines;
+}
+
+unsigned int CodeBlock::getLinesSize() {
+    return lines.size();
+}
+
+vector<CodeBlock>& CodeBlock::getSubBlocks() {
+    return subBlocks;
+}
+
+vector<unsigned int>& CodeBlock::getSubBlocksPos() {
+    return subBlocksPosArr;
+}
+
+unsigned int CodeBlock::getDepth() {
+    return depth;
+}
+
+unsigned int CodeBlock::getMaxLen() {
+    return max_len;
 }
 
 void CodeBlock::print() {
@@ -69,10 +97,11 @@ void CodeBlock::print() {
         else if (depth > 0 || lines[i].front() == '}') 
             for (int j = 0; j < depth - 1; ++j)
                 std::cout << '\t';
+        // std::cout << depth << "-" << i << ": " << lines[i] << '\n';
         std::cout << lines[i] << '\n';
-        if (si < subBlocksPosArr.size() && subBlocksPosArr[si] == i) {
+        while (si < subBlocksPosArr.size() && subBlocksPosArr[si] == i) {
             subBlocks[si++].print();
-        }
-            
+            // std::cout << subBlocks[si - 1].max_len << std::endl;
+        } 
     }
 }
