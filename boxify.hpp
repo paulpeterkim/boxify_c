@@ -23,7 +23,7 @@
 #define VERTICALLEFT u8"\u2563"
 #define VERTICALRIGHT u8"\u2560"
 
-#define BOXIFY_MACRO "#define u8\"\u2551\" \n#define u8\"\u2550\" \n#define u8\"\u2554\" \n#define u8\"\u2557\" {\n#define u8\"\u255D\" \n#define u8\"\u255A\" }\n#define u8\"\u2563\" {\n#define u8\"\u2560\" }\n"
+#define BOXIFY_MACRO "#define \u2551 \n#define \u2550 \n#define \u2554 \n#define \u2557 {\n#define \u255D \n#define \u255A }\n#define \u2563 {\n#define \u2560 }\n"
 #define BOXIFY_DIRECTORY "./boxified/"
 #define BOXIFY_INDICATOR "_boxified"
 class Boxifier {
@@ -35,7 +35,7 @@ private:
     vector<string> lines;
 
 public:
-    Boxifier(const std::string path);
+    Boxifier(const std::string path, bool add_indicator=true);
     void boxifyAll();
     void boxify(CodeBlock& block);
 };

@@ -1,9 +1,15 @@
 #include "boxify.hpp"
 
-Boxifier::Boxifier(const std::string path)
+Boxifier::Boxifier(const std::string path, bool add_indicator)
     : path(path), fileReader(path) {
     auto [name, ext] = splitExtension(path);
-    vector<string> parts = {BOXIFY_DIRECTORY + name.substr(2) + BOXIFY_INDICATOR, ext};
+    vector<string> parts;
+    if (add_indicator){
+        parts = {BOXIFY_DIRECTORY + name.substr(2) + BOXIFY_INDICATOR, ext};
+    } else {
+        parts = {BOXIFY_DIRECTORY + name.substr(2), ext};
+    }
+
     string outputFileName = join(parts, ".");
     fileWriter.open(outputFileName);
 
@@ -72,7 +78,7 @@ int main() {
     
     
     for (std::string path : finder.getFileNames()) {
-        Boxifier boxifier(path);
+        Boxifier boxifier(path, false);
         boxifier.boxifyAll();
     }
 
