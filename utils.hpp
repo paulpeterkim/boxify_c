@@ -97,4 +97,26 @@ inline std::string center_string(const std::string& text, unsigned int width, st
 }
 
 
+std::pair<std::string, std::string> splitExtension(const std::string& filename) {
+    size_t dotPos = filename.find_last_of('.');
+    if (dotPos == std::string::npos || dotPos == 0 || dotPos == filename.length() - 1) {
+        // No extension or leading/trailing dot
+        return {filename, ""};
+    }
+
+    std::string name = filename.substr(0, dotPos);
+    std::string ext = filename.substr(dotPos + 1);
+    return {name, ext};
+}
+
+std::string join(const std::vector<std::string>& elements, const std::string& delimiter) {
+    std::ostringstream os;
+    for (size_t i = 0; i < elements.size(); ++i) {
+        if (i != 0)
+            os << delimiter;
+        os << elements[i];
+    }
+    return os.str();
+}
+
 #endif
