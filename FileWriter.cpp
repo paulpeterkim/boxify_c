@@ -14,7 +14,8 @@ FileWriter::~FileWriter() {
         outputFile.close();
 }
 
-bool FileWriter::open() {
+bool FileWriter::open(const string& fileName) {
+    this->fileName = fileName;
     outputFile.open(fileName);
     if (!outputFile){
         std::cerr << "Unable to write to file: " << fileName << '\n';

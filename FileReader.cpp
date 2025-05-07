@@ -15,7 +15,8 @@ FileReader::~FileReader() {
         inputFile.close();
 }
 
-bool FileReader::open() {
+bool FileReader::open(const string& fileName) {
+    this->fileName = fileName; 
     inputFile.open(fileName);
     if (!inputFile){
         std::cerr << "Unable to open file: " << fileName << '\n';
