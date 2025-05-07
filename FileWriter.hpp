@@ -22,7 +22,7 @@ public:
 
     bool isOpen() const;
 
-    void writeLine(string& line);
+    void writeLine(const string& line);
 };
 
 

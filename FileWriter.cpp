@@ -28,6 +28,6 @@ bool FileWriter::isOpen() const {
     return outputFile.is_open();
 }
 
-void FileWriter::writeLine(string& line) {
+void FileWriter::writeLine(const string& line) {
     outputFile << line << '\n';
 }
