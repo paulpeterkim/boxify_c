@@ -12,9 +12,13 @@ private:
     string fileName;
     ifstream inputFile;
 public:
+    FileReader();
+
     FileReader(const string& fileName);
 
     ~FileReader();
+
+    bool open(const string& fileName);
 
     bool isOpen() const;
 

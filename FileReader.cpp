@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+FileReader::FileReader() {}
+
 FileReader::FileReader(const string& fileName) : fileName(fileName) {
     inputFile.open(fileName);
     if (!inputFile)
@@ -11,6 +13,15 @@ FileReader::FileReader(const string& fileName) : fileName(fileName) {
 FileReader::~FileReader() {
     if (inputFile.is_open())
         inputFile.close();
+}
+
+bool FileReader::open() {
+    inputFile.open(fileName);
+    if (!inputFile){
+        std::cerr << "Unable to open file: " << fileName << '\n';
+        return false;
+    }
+    return true;
 }
 
 bool FileReader::isOpen() const {
